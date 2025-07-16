@@ -2,32 +2,40 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Grow a Garden Stock</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Grow A Garden Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <h1>Grow a Garden - Current Stock</h1>
 
-  <div class="section">
+  <h1>Grow A Garden Dashboard</h1>
+  <div id="timer">Loading timer...</div>
+
+  <section id="weather">
+    <h2>Current Weather</h2>
+    <div id="weather-info">Loading weather...</div>
+  </section>
+
+  <section>
     <h2>Seeds</h2>
-    <div id="seeds" class="stock-grid"></div>
-  </div>
+    <div id="seeds" class="cards-container"></div>
+  </section>
 
-  <div class="section">
+  <section>
     <h2>Gear</h2>
-    <div id="gear" class="stock-grid"></div>
-  </div>
+    <div id="gear" class="cards-container"></div>
+  </section>
 
-  <div class="section">
+  <section>
     <h2>Eggs</h2>
-    <div id="eggs" class="stock-grid"></div>
-  </div>
+    <div id="eggs" class="cards-container"></div>
+  </section>
 
-  <div class="section">
+  <section>
     <h2>Cosmetics</h2>
-    <div id="cosmetics" class="stock-grid"></div>
-  </div>
+    <div id="cosmetics" class="cards-container"></div>
+  </section>
 
-  <script src="script.js?v=3"></script>
+  <script src="script.js?v=4"></script>
 </body>
 </html>
