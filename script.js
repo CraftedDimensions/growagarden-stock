@@ -1,6 +1,11 @@
 const REFRESH_INTERVAL = 60; // seconds
 
-let countdown = REFRESH_INTERVAL;
+let timerEl = document.createElement('div');
+timerEl.style.textAlign = 'center';
+timerEl.style.fontWeight = 'bold';
+timerEl.style.marginBottom = '20px';
+timerEl.style.fontSize = '1.2rem';
+document.body.insertBefore(timerEl, document.body.firstChild);
 
 async function loadStock() {
   const res = await fetch('https://api.joshlei.com/v2/growagarden/stock');
@@ -14,10 +19,9 @@ async function loadStock() {
   fillSection(data.gear_stock, 'gear');
   fillSection(data.egg_stock, 'eggs');
   fillSection(data.cosmetic_stock, 'cosmetics');
-  
-  countdown = REFRESH_INTERVAL; // reset countdown after each fetch
 }
 
+// Fill function stays the same as before
 function fillSection(items, containerId) {
   const container = document.getElementById(containerId);
   items.forEach(item => {
@@ -38,28 +42,26 @@ function fillSection(items, containerId) {
   });
 }
 
-// Create and show countdown timer element
-const body = document.querySelector('body');
-const timerEl = document.createElement('div');
-timerEl.style.textAlign = 'center';
-timerEl.style.fontWeight = 'bold';
-timerEl.style.marginBottom = '20px';
-timerEl.style.fontSize = '1.2rem';
-body.insertBefore(timerEl, body.firstChild);
+// Calculate time until next 60-second interval
+function getSecondsUntilNextRefresh() {
+  const now = Math.floor(Date.now() / 1000);
+  return REFRESH_INTERVAL - (now % REFRESH_INTERVAL);
+}
+
+let countdown = getSecondsUntilNextRefresh();
 
 function updateTimer() {
   timerEl.textContent = `Next update in: ${countdown} second${countdown !== 1 ? 's' : ''}`;
   countdown--;
-
-  if (countdown < 0) countdown = REFRESH_INTERVAL;
+  if (countdown < 0) {
+    loadStock();        // Refresh stock when countdown hits zero
+    countdown = REFRESH_INTERVAL;
+  }
 }
 
 // Initial load
 loadStock();
 updateTimer();
 
-// Update stock every 60 seconds
-setInterval(loadStock, REFRESH_INTERVAL * 1000);
-
-// Update countdown timer every second
+// Update timer every second
 setInterval(updateTimer, 1000);
